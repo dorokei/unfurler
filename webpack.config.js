@@ -1,3 +1,6 @@
+require('dotenv').config();
+const webpack = require('webpack');
+
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const publidDir = path.join(__dirname, '/public');
@@ -21,6 +24,11 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        SITEINFO_API_URL: JSON.stringify(process.env.SITEINFO_API_URL)
+      }
+    }),
     new MiniCssExtractPlugin({ filename: 'bundle.css' })
   ],
   resolve: {
