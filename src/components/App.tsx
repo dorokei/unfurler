@@ -34,7 +34,8 @@ class App extends Component<{}, AppState> {
 
     SiteInfo.createFromUrl(this.state.url).then((siteInfo: SiteInfo) => {
       if (siteInfo.valid()) {
-        const newText = this.state.text.length > 0 ? this.state.text + "\n\n" + siteInfo.outputMarkDownText() : siteInfo.outputMarkDownText();
+        // const newText = this.state.text.length > 0 ? this.state.text + "\n\n" + siteInfo.outputMarkDownText() : siteInfo.outputMarkDownText();
+        const newText = siteInfo.outputMarkDownText();
         this.setState({
           text: newText,
           status: Status.SUCCESS
