@@ -2,9 +2,17 @@ import React, { Component, MouseEvent, KeyboardEvent } from "react";
 import marked from 'marked';
 import SiteInfo from '../models/SiteInfo';
 
+enum Status {
+  NONE,
+  FETCHING,
+  SUCCESS,
+  FAILED,
+}
+
 interface AppState {
   url: string;
   text: string;
+  status: Status;
 }
 
 class App extends Component<{}, AppState> {
@@ -12,23 +20,38 @@ class App extends Component<{}, AppState> {
     super(props);
     this.state = {
       text: "",
-      url: ""
+      url: "",
+      status: Status.NONE
     };
   }
 
   submit(){
+    if (this.state.status == Status.FETCHING) {
+      return;
+    } else {
+      this.setState({ status: Status.FETCHING });
+    }
+
     console.log("submit");
     console.log("url: " + this.state.url);
 
     SiteInfo.createFromUrl(this.state.url).then((siteInfo: SiteInfo) => {
       if (siteInfo.valid()) {
         const newText = this.state.text.length > 0 ? this.state.text + "\n\n" + siteInfo.outputMarkDownText() : siteInfo.outputMarkDownText();
-        this.setState({ text: newText });
+        this.setState({
+          text: newText,
+          status: Status.SUCCESS
+        });
       } else {
+        this.setState({
+          status: Status.FAILED
+        });
       }
     })
     .catch(error => {
-
+      this.setState({
+        status: Status.FAILED
+      });
     });;
   }
 
@@ -62,6 +85,42 @@ class App extends Component<{}, AppState> {
   render() {
     const preview: string = marked(this.state.text)
 
+    var statusMessage = (<></>);
+    switch (+this.state.status) {
+      case Status.FETCHING:
+          statusMessage = (
+            <>
+              <span className="icon">
+                <i className="fas fa-spinner fa-pulse"></i>
+              </span>
+              Fetching...
+            </>
+          );
+          break;
+      case Status.SUCCESS:
+          statusMessage = (
+            <>
+              <span className="icon">
+                <i className="fas fa-check-square"></i>
+              </span>
+              OK!
+            </>
+          );
+          break;
+      case Status.FAILED:
+          statusMessage = (
+            <div className="has-text-danger">
+              <span className="icon">
+                <i className="fas fa-exclamation-triangle"></i>
+              </span>
+              Faild!
+            </div>
+          );
+          break;
+      default:
+          break;
+    }
+
     return (
       <>
         <div>
@@ -86,12 +145,16 @@ class App extends Component<{}, AppState> {
                   </div>
                   <div className="control">
                     <button
+                      disabled={this.state.status == Status.FETCHING}
                       className="button is-info  is-large"
                       onClick={e => this.onClickSubmitButton(e)}
                     >
                       GET
                     </button>
                   </div>
+                </div>
+                <div className="has-text-right">
+                  {statusMessage}
                 </div>
               </div>
             </div>
@@ -104,7 +167,7 @@ class App extends Component<{}, AppState> {
               <textarea
                 value={this.state.text}
                 className="textarea"
-                placeholder="10 lines of textarea"
+                placeholder="Markdown here!"
                 onChange={e => this.onChangeTextArea(e)}
               />
             </div>
