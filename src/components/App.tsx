@@ -1,6 +1,7 @@
 import React, { Component, MouseEvent, KeyboardEvent } from "react";
 import marked from 'marked';
 import SiteInfo from '../models/SiteInfo';
+import ReactGA from 'react-ga';
 
 enum Status {
   NONE,
@@ -23,6 +24,10 @@ class App extends Component<{}, AppState> {
       url: "",
       status: Status.NONE
     };
+  }
+
+  componentDidMount() {
+    ReactGA.pageview("/");
   }
 
   submit(){
