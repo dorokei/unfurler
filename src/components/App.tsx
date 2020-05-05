@@ -53,13 +53,22 @@ class App extends Component<{}, AppState> {
     });;
   }
 
-  onClickSubmitButton(event: MouseEvent){
+  onClickSubmitButton(e: MouseEvent){
     this.submit();
   }
 
   onChangeInput(e: React.ChangeEvent<HTMLInputElement>){
     e.persist();
     this.setState({ url: e.target.value });
+  }
+
+  onCopyButtonClicked(e: MouseEvent){
+    const textarea = document.getElementsByTagName("textarea")[0];
+    textarea.select();
+    document.execCommand("copy");
+  }
+
+  onLeaveCopyButton(e: MouseEvent){
   }
 
   onChangeTextArea(e: React.ChangeEvent<HTMLTextAreaElement>){
@@ -157,6 +166,13 @@ class App extends Component<{}, AppState> {
           <div className="column area has-background-info	is-textarea">
             <div className="area-content has-text-centered">
               <span className="title is-4">Markdown</span>
+              <button
+                className="button is-small is-pulled-right is-primary"
+                onClick={e => this.onCopyButtonClicked(e)}
+                onMouseLeave={e => this.onLeaveCopyButton(e)}
+              >
+                Copy
+              </button>
               <textarea
                 value={this.state.text}
                 className="textarea"
