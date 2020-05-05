@@ -26,7 +26,8 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        SITEINFO_API_URL: JSON.stringify(process.env.SITEINFO_API_URL)
+        SITEINFO_API_URL: JSON.stringify(process.env.SITEINFO_API_URL),
+        GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID)
       }
     }),
     new MiniCssExtractPlugin({ filename: 'bundle.css' })

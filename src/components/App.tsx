@@ -163,7 +163,7 @@ class App extends Component<{}, AppState> {
           </div>
         </section>
         <div className="columns is-gapless">
-          <div className="column area has-background-info	is-textarea">
+          <div className="column area has-background-info is-textarea">
             <div className="area-content has-text-centered">
               <span className="title is-4">Markdown</span>
               <button
