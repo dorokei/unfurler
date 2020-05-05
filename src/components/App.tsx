@@ -123,47 +123,45 @@ class App extends Component<{}, AppState> {
 
     return (
       <>
-        <div>
-          <section className="hero is-medium is-primary is-bold">
-            <div className="hero-body">
-              <div className="container">
-                <h1 className="title">
-                  Unfurler
-                </h1>
-                <h2 className="subtitle">
-                  Get site information markdown.
-                </h2>
-                <div className="field has-addons">
-                  <div className="control is-expanded">
-                    <input
-                      className="input is-large"
-                      type="text"
-                      placeholder="Paste a URL"
-                      onChange={e => this.onChangeInput(e)}
-                      onKeyDown={e => this.onKeyPress(e)}
-                    />
-                  </div>
-                  <div className="control">
-                    <button
-                      disabled={this.state.status == Status.FETCHING}
-                      className="button is-info  is-large"
-                      onClick={e => this.onClickSubmitButton(e)}
-                    >
-                      GET
-                    </button>
-                  </div>
+        <section className="hero is-medium is-primary is-bold">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">
+                Unfurler
+              </h1>
+              <h2 className="subtitle">
+                Get site information markdown.
+              </h2>
+              <div className="field has-addons">
+                <div className="control is-expanded">
+                  <input
+                    className="input is-large"
+                    type="text"
+                    placeholder="Paste a URL"
+                    onChange={e => this.onChangeInput(e)}
+                    onKeyDown={e => this.onKeyPress(e)}
+                  />
                 </div>
-                <div className="has-text-right">
-                  {statusMessage}
+                <div className="control">
+                  <button
+                    disabled={this.state.status == Status.FETCHING}
+                    className="button is-info  is-large"
+                    onClick={e => this.onClickSubmitButton(e)}
+                  >
+                    GET
+                  </button>
                 </div>
               </div>
+              <div className="has-text-right">
+                {statusMessage}
+              </div>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
         <div className="columns is-gapless">
-          <div className="column">
-            <div className="notification is-info has-text-centered">
-              MARKDOWN
+          <div className="column area has-background-info	is-textarea">
+            <div className="area-content has-text-centered">
+              <span className="title is-4">Markdown</span>
               <textarea
                 value={this.state.text}
                 className="textarea"
@@ -172,9 +170,9 @@ class App extends Component<{}, AppState> {
               />
             </div>
           </div>
-          <div className="column">
-            <div className="notification is-warning has-text-centered">
-              PREVIEW
+          <div className="column area has-background-warning">
+            <div className="area-content has-text-centered">
+              <span className="title is-4">Preview</span>
               <div
                 className="markdown-body"
                 dangerouslySetInnerHTML={{

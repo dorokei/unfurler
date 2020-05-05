@@ -1,9 +1,28 @@
 @import 'node_modules/bulma/bulma.sass';
 @import 'node_modules/github-markdown-css/github-markdown';
 
-.markdown-body{
+.markdown-body {
   background-color: white;
   padding: 20px;
   border-radius: 4px;
   text-align: left;
+  min-height: 8em;
+}
+
+.area{
+  &.is-textarea {
+    .title{
+      color: white;
+    }
+
+    textarea {
+      height: calc(100% - 1.5rem) !important;
+      max-height: inherit;
+    }
+  }
+
+  .area-content {
+    padding: 20px;
+    height: 100%;
+  }
 }
