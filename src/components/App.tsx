@@ -1,5 +1,6 @@
-import React, { Component, MouseEvent } from "react";
+import React, { Component, MouseEvent, KeyboardEvent } from "react";
 import marked from 'marked';
+import SiteInfo from '../models/SiteInfo';
 
 interface AppState {
   url: string;
@@ -15,15 +16,47 @@ class App extends Component<{}, AppState> {
     };
   }
 
-  toggleCreateListForm(event: MouseEvent){
-    // console.log(event);
-    // console.log('#toggleCreateListForm');
+  submit(){
+    console.log("submit");
+    console.log("url: " + this.state.url);
+
+    SiteInfo.createFromUrl(this.state.url).then((siteInfo: SiteInfo) => {
+      if (siteInfo.valid()) {
+        const newText = this.state.text.length > 0 ? this.state.text + "\n\n" + siteInfo.outputMarkDownText() : siteInfo.outputMarkDownText();
+        this.setState({ text: newText });
+      } else {
+      }
+    })
+    .catch(error => {
+
+    });;
+  }
+
+  onClickSubmitButton(event: MouseEvent){
+    console.log("onClickSubmitButton");
+    this.submit();
+  }
+
+  onChangeInput(e: React.ChangeEvent<HTMLInputElement>){
+    console.log('#onChangeInput');
+    e.persist();
+    this.setState({ url: e.target.value });
   }
 
   onChangeTextArea(e: React.ChangeEvent<HTMLTextAreaElement>){
     console.log('#onChangeTextArea');
-    this.setState({ text: e.target.value });
     e.persist();
+    this.setState({ text: e.target.value });
+  }
+
+  onKeyPress(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.keyCode == 13) {
+      // Pressed Enter key
+      e.preventDefault();
+      this.submit();
+    } else if (e.keyCode == 27) {
+      // Pressed Esc key
+    }
   }
 
   render() {
@@ -39,18 +72,24 @@ class App extends Component<{}, AppState> {
                   Unfurler
                 </h1>
                 <h2 className="subtitle">
-                  Primary bold subtitle
+                  Get site information markdown.
                 </h2>
                 <div className="field has-addons">
                   <div className="control is-expanded">
-                    <input className="input is-large" type="text" placeholder="Paste a URL" />
+                    <input
+                      className="input is-large"
+                      type="text"
+                      placeholder="Paste a URL"
+                      onChange={e => this.onChangeInput(e)}
+                      onKeyDown={e => this.onKeyPress(e)}
+                    />
                   </div>
                   <div className="control">
                     <button
                       className="button is-info  is-large"
-                      onClick={e => this.toggleCreateListForm(e)}
+                      onClick={e => this.onClickSubmitButton(e)}
                     >
-                      Search
+                      GET
                     </button>
                   </div>
                 </div>
@@ -63,6 +102,7 @@ class App extends Component<{}, AppState> {
             <div className="notification is-info has-text-centered">
               MARKDOWN
               <textarea
+                value={this.state.text}
                 className="textarea"
                 placeholder="10 lines of textarea"
                 onChange={e => this.onChangeTextArea(e)}
