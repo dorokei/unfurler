@@ -32,9 +32,6 @@ class App extends Component<{}, AppState> {
       this.setState({ status: Status.FETCHING });
     }
 
-    console.log("submit");
-    console.log("url: " + this.state.url);
-
     SiteInfo.createFromUrl(this.state.url).then((siteInfo: SiteInfo) => {
       if (siteInfo.valid()) {
         const newText = this.state.text.length > 0 ? this.state.text + "\n\n" + siteInfo.outputMarkDownText() : siteInfo.outputMarkDownText();
@@ -56,18 +53,15 @@ class App extends Component<{}, AppState> {
   }
 
   onClickSubmitButton(event: MouseEvent){
-    console.log("onClickSubmitButton");
     this.submit();
   }
 
   onChangeInput(e: React.ChangeEvent<HTMLInputElement>){
-    console.log('#onChangeInput');
     e.persist();
     this.setState({ url: e.target.value });
   }
 
   onChangeTextArea(e: React.ChangeEvent<HTMLTextAreaElement>){
-    console.log('#onChangeTextArea');
     e.persist();
     this.setState({ text: e.target.value });
   }
