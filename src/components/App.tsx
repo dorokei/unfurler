@@ -139,7 +139,7 @@ class App extends Component<{}, AppState> {
                 Unfurler
               </h1>
               <h2 className="subtitle">
-                Get site information markdown.
+                Simple preview of a link info for markdown.
               </h2>
               <div className="field has-addons">
                 <div className="control is-expanded">
