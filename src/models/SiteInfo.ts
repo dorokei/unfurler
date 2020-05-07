@@ -1,5 +1,5 @@
 import axios from 'axios';
-const MARKDOWN_TEMPLATE_TITLE = "> ### [__TITLE__](__LINK__)";
+const MARKDOWN_TEMPLATE_TITLE = "> **[__TITLE__](__LINK__)**";
 const MARKDOWN_TEMPLATE_DESCRIPTION = "> __DESCRIPTION__";
 const MARKDOWN_TEMPLATE_IMAGE_URL = "> ![](__IMAGE_URL__)";
 
