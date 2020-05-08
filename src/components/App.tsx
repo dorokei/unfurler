@@ -3,6 +3,12 @@ import marked from 'marked';
 import SiteInfo from '../models/SiteInfo';
 import ReactGA from 'react-ga';
 
+marked.setOptions({
+  gfm: true,
+  breaks: true,
+  sanitize: false
+});
+
 enum Status {
   NONE,
   FETCHING,
