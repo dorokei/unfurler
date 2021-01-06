@@ -11,7 +11,7 @@
     "build:production": "NODE_ENV=production webpack -p"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bulma": "^0.8.2",
     "github-markdown-css": "^4.0.0",
     "marked": "^1.0.0",
